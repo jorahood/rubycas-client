@@ -1,3 +1,17 @@
+=== IU-specific modifications
+
+in your rubyCAS initializer, you need to specify the login_url and validate_url as well as the base_url like so:
+
+require 'casclient'
+require 'casclient/frameworks/rails/filter'
+
+CASClient::Frameworks::Rails::Filter.configure(
+  :cas_base_url => 'https://cas.iu.edu/cas/',
+  # Re: 'cassvc' param, see https://kb.iu.edu/data/alqm.html
+  :login_url => 'https://cas.iu.edu/cas/login?cassvc=ANY',
+  :validate_url => 'https://cas.iu.edu/cas/validate?cassvc=ANY'
+) 
+
 = RubyCAS-Client
 
 Author::    Matt Zukowski <matt AT roughest DOT net>; inspired by code by Ola Bini <ola.bini AT ki DOT se> and Matt Walker <mwalker AT tamu DOT edu>

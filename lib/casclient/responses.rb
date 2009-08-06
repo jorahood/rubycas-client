@@ -39,8 +39,7 @@ module CASClient
       raise BadResponseException, 
         "CAS response is empty/blank." if raw_text.blank?
       @parse_datetime = Time.now
-      
-      if raw_text =~ /^(yes|no)\n(.*?)\n$/m
+      if raw_text =~ /^(yes|no)\r\n(\S*)/m #/^(yes|no)\n(.*?)\n$/m didn't work because the IU CAS server sends a carriage return as well as a newline and doesn't send two sets of \r\n after a 'no' response
         @protocol = 1.0
         @valid = $~[1] == 'yes'
         @user = $~[2]

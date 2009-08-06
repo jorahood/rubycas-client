@@ -248,7 +248,7 @@ module CASClient
           end
           
           def read_ticket(controller)
-            ticket = controller.params[:ticket]
+            ticket = controller.params[:casticket]
             
             return nil unless ticket
             
@@ -272,7 +272,7 @@ module CASClient
             end
             
             params = controller.params.dup
-            params.delete(:ticket)
+            params.delete(:casticket)
             service_url = controller.url_for(params)
             log.debug("Guessed service url: #{service_url.inspect}")
             return service_url

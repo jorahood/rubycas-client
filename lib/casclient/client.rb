@@ -82,8 +82,8 @@ module CASClient
     def validate_service_ticket(st)
       uri = URI.parse(validate_url)
       h = uri.query ? query_to_hash(uri.query) : {}
-      h['service'] = st.service
-      h['ticket'] = st.ticket
+      h['casurl'] = st.service
+      h['casticket'] = st.ticket
       h['renew'] = 1 if st.renew
       h['pgtUrl'] = proxy_callback_url if proxy_callback_url
       uri.query = hash_to_query(h)
@@ -194,7 +194,8 @@ module CASClient
     
     def add_service_to_login_url(service_url)
       uri = URI.parse(login_url)
-      uri.query = (uri.query ? uri.query + "&" : "") + "service=#{CGI.escape(service_url)}"
+      # IU's CAS server can't deal with escaped redirects, and the param has to be named "casurl" not "service"
+      uri.query = (uri.query ? uri.query + "&" : "") + "casurl=#{service_url}"
       uri.to_s
     end
     
